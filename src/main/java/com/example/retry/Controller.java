@@ -7,16 +7,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
 
-	private final ServiceWrapper serviceWrapper;
+	private final RetryService retryService;
 	
-	public Controller(ServiceWrapper serviceWrapper) {
-		this.serviceWrapper = serviceWrapper;
+	public Controller(RetryService retryService) {
+		this.retryService = retryService;
 	}
 	
 	@GetMapping("/retry")
 	public ResponseEntity<String> tryRetry() throws Exception {
 		System.out.println("controller - calling serviceWrapper...");
-		serviceWrapper.callRetryServiceMethod1();
+		retryService.retryWhenException("something");
+		//serviceWrapper.callRetryServiceMethod1();
 		System.out.println("ok...");
 		return ResponseEntity.ok("OK");
 	}
